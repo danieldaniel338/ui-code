@@ -1,0 +1,22 @@
+pipeline{
+    agent{
+        label'dev'
+    }
+    stages{
+        stage('git checkout'){
+            steps{
+                git 'https://github.com/danieldaniel338/ui-code.git'
+            }
+        }
+         stage('code copying'){
+            steps{
+                sh 'sudo cp -R /home/ec2-user/jenkins/workspace/ui/* /var/www/html'
+            }
+        }
+        stage('restart httpd'){
+            steps{
+                sh 'sudo systemctl restart httpd'
+            }
+        }
+    }
+}
